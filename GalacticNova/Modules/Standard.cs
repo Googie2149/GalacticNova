@@ -134,11 +134,11 @@ namespace GalacticNova.Modules.Standard
         {
             var guild = await restClient.GetGuildAsync(config.HomeGuildId);
             var channel = await guild.GetChannelAsync(995622112079392849) as RestTextChannel;
-            var emoteGuild = await Context.Client.GetGuild(783783142737182720).GetEmotesAsync();
+            //var emoteGuild = await Context.Client.GetGuild(783783142737182720).GetEmotesAsync();
 
             //var msg1 = await channel.GetMessageAsync(997566857122947172) as RestUserMessage;
             //var msg2 = await channel.GetMessageAsync(997566857810813008) as RestUserMessage;
-            var msg3 = await channel.GetMessageAsync(997569672864088196) as RestUserMessage;
+            var msg3 = await channel.GetMessageAsync(1030450157793316884) as RestUserMessage;
 
 
 
@@ -159,14 +159,29 @@ namespace GalacticNova.Modules.Standard
 
             //await msg2.AddReactionAsync(emoteServer.FirstOrDefault(x => x.Name == "Pink"));
 
-            await msg3.ModifyAsync(x => x.Content = "PRONOUN ROLES ALSO AVAILABLE, IF YOU WISH. ->\n" +
-                    "<:friendheartred:997557216917868614> - SHE / HER\n" +
-                    "<:friendheartteal:997557217911914586> - HE / HIM\n" +
-                    "<:friendheartorange:997557216225796106> - THEY / THEM\n" +
-                    "<:friendheartbrown:1010719561101881384> - IT / IT'S\n" +
-                    "<:friendheartgrey:997557214401265695> - OTHER / NO PREFERENCE");
+            await msg3.ModifyAsync(x => x.Content = "ADDITIONAL CHANNELS, SHOULD THEY INTEREST YOU ->\n" +
+            "🔐 - ACCESS TO 18+ DISCUSSIONS AND CONTENT\n" +
+            "🏘 - ACCESS TO ROLEPLAYING FORUM");
 
-            await msg3.AddReactionAsync(emoteGuild.FirstOrDefault(x => x.Name == "friendheartbrown"));
+            await msg3.AddReactionAsync(new Emoji("🏘"));
+
+            //await msg3.AddReactionAsync(emoteGuild.FirstOrDefault(x => x.Name == "friendheartbrown"));
+        }
+
+        [Command("opennsfw")]
+        [Hide]
+        public async Task OpenFunnyRoom()
+        {
+            if (Context.Guild.Id != config.HomeGuildId)
+                return;
+
+            var channel = Context.Guild.GetChannel(995622112079392849) as SocketTextChannel;
+
+            var msg = await channel.SendMessageAsync("ACCESS TO 18+ DISCUSSIONS AND CONTENT ->");
+
+            await Task.Delay(1000);
+
+            await msg.AddReactionAsync(new Emoji("🔐"));
         }
 
         [Command("ping")]

@@ -173,6 +173,12 @@ namespace GalacticNova
                     case "friendheartbrown":
                         role = user.Guild.GetRole(997950291989250119);
                         break;
+                    case "🔐":
+                        role = user.Guild.GetRole(1029279897505501246);
+                        break;
+                    case "🏘":
+                        role = user.Guild.GetRole(1051161366058246174);
+                        break;
                 }
 
                 if (role == null)
@@ -218,6 +224,9 @@ namespace GalacticNova
                         break;
                     case "friendheartbrown":
                         role = user.Guild.GetRole(997950291989250119);
+                        break;
+                    case "🔐":
+                        role = user.Guild.GetRole(1029279897505501246);
                         break;
                 }
 
