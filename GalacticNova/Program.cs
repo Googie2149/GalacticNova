@@ -228,6 +228,9 @@ namespace GalacticNova
                     case "🔐":
                         role = user.Guild.GetRole(1029279897505501246);
                         break;
+                    case "🏘":
+                        role = user.Guild.GetRole(1051161366058246174);
+                        break;
                 }
 
                 if (role == null)
