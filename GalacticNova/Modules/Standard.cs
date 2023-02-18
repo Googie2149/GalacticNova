@@ -134,11 +134,11 @@ namespace GalacticNova.Modules.Standard
         {
             var guild = await restClient.GetGuildAsync(config.HomeGuildId);
             var channel = await guild.GetChannelAsync(995622112079392849) as RestTextChannel;
-            //var emoteGuild = await Context.Client.GetGuild(783783142737182720).GetEmotesAsync();
+            var emoteGuild = await Context.Client.GetGuild(783783142737182720).GetEmotesAsync();
 
-            //var msg1 = await channel.GetMessageAsync(997566857122947172) as RestUserMessage;
+            var msg1 = await channel.GetMessageAsync(997566857122947172) as RestUserMessage;
             //var msg2 = await channel.GetMessageAsync(997566857810813008) as RestUserMessage;
-            var msg3 = await channel.GetMessageAsync(1030450157793316884) as RestUserMessage;
+            //var msg3 = await channel.GetMessageAsync(1030450157793316884) as RestUserMessage;
 
 
 
@@ -154,16 +154,17 @@ namespace GalacticNova.Modules.Standard
 
             //await Task.Delay(3000);
 
-            ////await msg1.ModifyAsync(x => { x.Content = "<@&996331740605984778> <@&996331634276188200> <@&996331821333745766> <@&996331869694078997>"; x.AllowedMentions = null; });
+            await msg1.ModifyAsync(x => { x.Content = "<@&996331740605984778> <@&996331634276188200> <@&996331821333745766> <@&996331869694078997> <@&1076596819070554215>"; x.AllowedMentions = null; });
+            await msg1.AddReactionAsync(emoteGuild.FirstOrDefault(x => x.Name == "Purple"));
             //await msg2.ModifyAsync(x => { x.Content = "<@&996331907748991046> <@&997813700654288957> <@&996331946084941834> <@&996331996034900029> <@&996332079539298386>"; x.AllowedMentions = null; });
 
             //await msg2.AddReactionAsync(emoteServer.FirstOrDefault(x => x.Name == "Pink"));
 
-            await msg3.ModifyAsync(x => x.Content = "ADDITIONAL CHANNELS, SHOULD THEY INTEREST YOU ->\n" +
-            "🔐 - ACCESS TO 18+ DISCUSSIONS AND CONTENT\n" +
-            "🏘 - ACCESS TO ROLEPLAYING FORUM");
+            //await msg3.ModifyAsync(x => x.Content = "ADDITIONAL CHANNELS, SHOULD THEY INTEREST YOU ->\n" +
+            //"🔐 - ACCESS TO 18+ DISCUSSIONS AND CONTENT\n" +
+            //"🏘 - ACCESS TO ROLEPLAYING FORUM");
 
-            await msg3.AddReactionAsync(new Emoji("🏘"));
+            //await msg3.AddReactionAsync(new Emoji("🏘"));
 
             //await msg3.AddReactionAsync(emoteGuild.FirstOrDefault(x => x.Name == "friendheartbrown"));
         }
