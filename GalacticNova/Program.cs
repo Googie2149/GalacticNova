@@ -189,7 +189,7 @@ namespace GalacticNova
                     await user.RemoveRoleAsync(role);
             }
 
-            if ((reaction.Channel as SocketThreadChannel)?.ParentChannel?.Id == 1087469624175644692)
+            if ((reaction.Channel as SocketThreadChannel)?.ParentChannel?.Id == 1041285612680003596)
             {
                 IMessage message = null;
                 RestTextChannel restChannel = null;
@@ -287,7 +287,7 @@ namespace GalacticNova
                     await user.AddRoleAsync(role);
             }
 
-            if ((reaction.Channel as SocketThreadChannel)?.ParentChannel?.Id == 1087469624175644692)
+            if ((reaction.Channel as SocketThreadChannel)?.ParentChannel?.Id == 1041285612680003596)
             {
                 IMessage message = null;
                 RestTextChannel restChannel = null;
