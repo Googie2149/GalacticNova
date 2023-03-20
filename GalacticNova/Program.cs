@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.Net;
 using Newtonsoft.Json;
 using System.Collections.Concurrent;
+using Discord.Net;
 
 namespace GalacticNova
 {
@@ -187,6 +188,52 @@ namespace GalacticNova
                 if (user.Roles.Contains(role))
                     await user.RemoveRoleAsync(role);
             }
+
+            if ((reaction.Channel as SocketThreadChannel)?.ParentChannel?.Id == 1087469624175644692)
+            {
+                IMessage message = null;
+                RestTextChannel restChannel = null;
+                IUser user = null;
+
+                if (reaction.Message.IsSpecified)
+                {
+                    message = reaction.Message.Value;
+                }
+                else
+                {
+                    restChannel = await restClient.GetChannelAsync(reaction.Channel.Id) as RestTextChannel;
+                    message = await restChannel.GetMessageAsync(reaction.MessageId) as RestUserMessage;
+                }
+
+                if (!message.IsPinned)
+                    return;
+
+
+                if (reaction.User.IsSpecified)
+                    user = reaction.User.Value as SocketGuildUser;
+                else
+                {
+                    if (restChannel == null)
+                        restChannel = await restClient.GetChannelAsync(reaction.Channel.Id) as RestTextChannel;
+
+                    user = await restChannel.GetUserAsync(reaction.UserId);
+                }
+
+                if (user.Id == message.Author.Id && reaction.Emote.Name == "📌")
+                {
+                    try
+                    {
+                        if (reaction.Message.IsSpecified)
+                            await (message as SocketUserMessage).UnpinAsync();
+                        else
+                            await (message as RestUserMessage).UnpinAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        await reaction.Channel.SendMessageAsync($"{user.Mention}. ->\nUNABLE TO UNPIN MESSAGE. ->\nUNKNOWN ERROR, ASK CREATOR. ->");
+                    }
+                }
+            }
         }
 
         private async Task Client_ReactionAdded(Cacheable<IUserMessage, ulong> cache, Cacheable<IMessageChannel, ulong> channelCache, SocketReaction reaction)
@@ -238,6 +285,59 @@ namespace GalacticNova
 
                 if (!user.Roles.Contains(role))
                     await user.AddRoleAsync(role);
+            }
+
+            if ((reaction.Channel as SocketThreadChannel)?.ParentChannel?.Id == 1087469624175644692)
+            {
+                IMessage message = null;
+                RestTextChannel restChannel = null;
+                IUser user = null;
+
+                if (reaction.Message.IsSpecified)
+                {
+                    message = reaction.Message.Value;
+                }
+                else
+                {
+                    restChannel = await restClient.GetChannelAsync(reaction.Channel.Id) as RestTextChannel;
+                    message = await restChannel.GetMessageAsync(reaction.MessageId) as RestUserMessage;
+                }
+
+                if (message.IsPinned)
+                    return;
+
+
+                if (reaction.User.IsSpecified)
+                    user = reaction.User.Value as SocketGuildUser;
+                else
+                {
+                    if (restChannel == null)
+                        restChannel = await restClient.GetChannelAsync(reaction.Channel.Id) as RestTextChannel;
+
+                    user = await restChannel.GetUserAsync(reaction.UserId);
+                }
+
+                if (user.Id == message.Author.Id && reaction.Emote.Name == "📌")
+                {
+                    try
+                    {
+                        if (reaction.Message.IsSpecified)
+                            await (message as SocketUserMessage).PinAsync();
+                        else
+                            await (message as RestUserMessage).PinAsync();
+                    }
+                    catch (HttpException ex)
+                    {
+                        if (ex.Message == "The server responded with error 30003: Maximum number of pins reached (50)")
+                        {
+                            await reaction.Channel.SendMessageAsync($"{user.Mention}. ->\nUNABLE TO PIN MESSAGE. ->\n50 PIN LIMIT REACHED. ->");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        await reaction.Channel.SendMessageAsync($"{user.Mention}. ->\nUNABLE TO PIN MESSAGE. ->\nUNKNOWN ERROR, ASK CREATOR. ->");
+                    }
+                }
             }
         }
 
