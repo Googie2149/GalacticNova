@@ -28,9 +28,6 @@ namespace GalacticNova
         [JsonProperty("guild_id")]
         public ulong HomeGuildId { get; set; }
 
-        [JsonProperty("log_channel")]
-        public ulong MainChannelId { get; set; }
-
         [JsonProperty("owner_ids")]
         public List<ulong> OwnerIds { get; set; } = new List<ulong>();
 
